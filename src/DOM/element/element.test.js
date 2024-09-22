@@ -236,4 +236,19 @@ describe('Element', () => {
             expect(parentElement.children[1]).to.have.text('Child 2');
         });
     });
+
+    describe('cloneElementWithClasses', () => {
+        it('clones an element with its CSS classes', () => {
+            const sourceElement = Element.create({
+                name: 'div',
+                class: ['class1', 'class2'],
+            });
+            const targetElement = Element.create({ name: 'div' });
+
+            Element.cloneElementWithClasses(sourceElement, targetElement);
+
+            expect(targetElement.firstChild).to.have.class('class1');
+            expect(targetElement.firstChild).to.have.class('class2');
+        });
+    });
 });
