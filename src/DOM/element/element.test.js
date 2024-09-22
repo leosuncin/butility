@@ -108,4 +108,34 @@ describe('Element', () => {
             expect(element).to.have.style('display', 'block');
         });
     });
+
+    describe('setHTML', () => {
+        afterEach(() => {
+            document.body.innerHTML = '';
+        });
+
+        it('replaces the HTML content of an element', () => {
+            const html = '<strong>Hello, World!</strong>';
+
+            Element.setHTML(document.body, html);
+
+            expect(document.body).to.have.html(html);
+        });
+
+        it('evaluates the scripts from the new HTML content', () => {
+            const html = `<div>
+                <label id="testLabel">Test</label>
+            </div>
+            <script type="module">
+                document.querySelector('#testLabel').innerText = 'Hello, World!';
+            </script>`;
+
+            Element.setHTML(document.body, html, true);
+
+            expect(document.querySelector('#testLabel')).to.exist;
+            expect(document.querySelector('#testLabel')).to.have.text(
+                'Hello, World!',
+            );
+        });
+    });
 });
