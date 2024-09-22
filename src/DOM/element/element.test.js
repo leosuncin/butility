@@ -222,4 +222,18 @@ describe('Element', () => {
             expect(parentElement.children[1]).to.have.tagName('li');
         });
     });
+
+    describe('appendElements', () => {
+        it('appends multiple child elements to another element', () => {
+            const parentElement = Element.create({ name: 'ul' });
+            const child1 = Element.create({ name: 'li', innerText: 'Child 1' });
+            const child2 = Element.create({ name: 'li', innerText: 'Child 2' });
+
+            Element.appendElements(parentElement, child1, child2);
+
+            expect(parentElement.children).to.have.lengthOf(2);
+            expect(parentElement.children[0]).to.have.text('Child 1');
+            expect(parentElement.children[1]).to.have.text('Child 2');
+        });
+    });
 });
