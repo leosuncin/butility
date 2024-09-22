@@ -162,4 +162,33 @@ describe('Element', () => {
 </div>`);
         });
     });
+
+    describe('setText', () => {
+        it('sets the text content of an element', () => {
+            const text = 'Hello, World!';
+            const element = Element.create({ name: 'label' });
+
+            Element.setText(element, text);
+
+            expect(element).to.have.text(text);
+        });
+
+        it('sets the text content and transform it to upper case', () => {
+            const text = 'Hello, World!';
+            const element = Element.create({ name: 'label' });
+
+            Element.setText(element, text, { toUpperCase: true });
+
+            expect(element).to.have.text('HELLO, WORLD!');
+        });
+
+        it('sets the text content and transform it to lower case', () => {
+            const text = 'Hello, World!';
+            const element = Element.create({ name: 'label' });
+
+            Element.setText(element, text, { toLowerCase: true });
+
+            expect(element).to.have.text('hello, world!');
+        });
+    });
 });
