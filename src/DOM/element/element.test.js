@@ -272,4 +272,29 @@ describe('Element', () => {
             );
         });
     });
+
+    describe('unwrapElement', () => {
+        it('unwraps an element from its parent', async () => {
+            const container = Element.create({
+                name: 'form',
+                children: [
+                    Element.create({
+                        name: 'fieldset',
+                        children: [
+                            Element.create({
+                                name: 'label',
+                                innerText: 'Hello',
+                            }),
+                        ],
+                    }),
+                ],
+            });
+
+            Element.unwrapElement(container.querySelector('fieldset'));
+
+            expect(container.firstChild).to.has.tagName('label');
+            expect(container.firstChild).to.has.text('Hello');
+            expect(container).dom.to.equal('<form><label>Hello</label></form>');
+        });
+    });
 });
