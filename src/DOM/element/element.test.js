@@ -251,4 +251,25 @@ describe('Element', () => {
             expect(targetElement.firstChild).to.have.class('class2');
         });
     });
+
+    describe('wrapElement', () => {
+        it('wraps an element with another element', () => {
+            const container = Element.create({
+                name: 'form',
+                children: [
+                    Element.create({ name: 'label', innerText: 'Hello' }),
+                ],
+            });
+            const wrapper = Element.create({ name: 'fieldset' });
+
+            Element.wrapElement(container.querySelector('label'), wrapper);
+
+            expect(wrapper.children).to.have.lengthOf(1);
+            expect(wrapper.firstChild).to.have.tagName('label');
+            expect(wrapper.firstChild).to.have.text('Hello');
+            expect(container).dom.to.equal(
+                '<form><fieldset><label>Hello</label></fieldset></form>',
+            );
+        });
+    });
 });
