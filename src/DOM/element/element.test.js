@@ -322,4 +322,29 @@ describe('Element', () => {
             expect(Element.isElementVisible(element)).to.be.false;
         });
     });
+
+    describe('isElementHidden', () => {
+        it('returns true if an element is hidden', () => {
+            const element = Element.create({
+                name: 'button',
+                innerText: 'Hello',
+                style: 'display: none',
+            });
+
+            document.body.appendChild(element);
+
+            expect(Element.isElementHidden(element)).to.be.true;
+        });
+
+        it('returns false if an element is not hidden', () => {
+            const element = Element.create({
+                name: 'button',
+                innerText: 'Hello',
+            });
+
+            document.body.appendChild(element);
+
+            expect(Element.isElementHidden(element)).to.be.false;
+        });
+    });
 });
