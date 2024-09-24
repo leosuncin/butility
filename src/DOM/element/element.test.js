@@ -3,6 +3,10 @@ import { expect } from '@open-wc/testing';
 import { Element } from './element';
 
 describe('Element', () => {
+    afterEach(() => {
+        document.body.innerHTML = '';
+    });
+
     describe('create', () => {
         it('throws an error if no element name is provided', () => {
             const message = "Element creation requires a 'name' property.";
@@ -110,10 +114,6 @@ describe('Element', () => {
     });
 
     describe('setHTML', () => {
-        afterEach(() => {
-            document.body.innerHTML = '';
-        });
-
         it('replaces the HTML content of an element', () => {
             const html = '<strong>Hello, World!</strong>';
 
@@ -295,6 +295,31 @@ describe('Element', () => {
             expect(container.firstChild).to.has.tagName('label');
             expect(container.firstChild).to.has.text('Hello');
             expect(container).dom.to.equal('<form><label>Hello</label></form>');
+        });
+    });
+
+    describe('isElementVisible', () => {
+        it('returns true if an element is visible within the viewport', () => {
+            const element = Element.create({
+                name: 'button',
+                innerText: 'Hello',
+            });
+
+            document.body.appendChild(element);
+
+            expect(Element.isElementVisible(element)).to.be.true;
+        });
+
+        it('returns false if an element is not visible within the viewport', () => {
+            const element = Element.create({
+                name: 'button',
+                innerText: 'Hello',
+                style: `position: absolute; top: ${window.innerHeight + 10}px`,
+            });
+
+            document.body.appendChild(element);
+
+            expect(Element.isElementVisible(element)).to.be.false;
         });
     });
 });
